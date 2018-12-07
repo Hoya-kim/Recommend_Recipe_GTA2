@@ -2,7 +2,8 @@
 
 const express = require('express')
 const router = express.Router()
+const User = require('./user')
 
-router.get('/test', (req, res)=>{return res.status(200).json({test:true})})
+router.use('/user', User)
 
 module.exports = router
