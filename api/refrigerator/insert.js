@@ -1,11 +1,12 @@
 const pool = require('../../util/mysqlObj')
 
-exports.IngredientSearch = (req, res) => {
-    const keyword = req.query.keyword
+exports.Insert = (req, res) => {
+    const id = req.session.uid || req.body.id
+    const ic = req.body.ic
 
     // 1. Query Check
     const QueryCheck = () => {
-        if (!keyword) {
+        if (!id || !ic) {
             return Promise.reject({
                 message: 'Query Error'
             })
@@ -15,7 +16,7 @@ exports.IngredientSearch = (req, res) => {
 
     // 2. SQL Start
     const SQLStart = (pool) => {
-        return pool.query(`SELECT * FROM INGREDIENT WHERE NAME LIKE '%${keyword}%'`)
+        return pool.query('INSERT INTO REFRIGERATOR(IC, ID) VALUES (?, ?)', [ic, id])
     }
 
     // 3. Response

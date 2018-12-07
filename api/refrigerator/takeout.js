@@ -1,11 +1,12 @@
 const pool = require('../../util/mysqlObj')
 
-exports.IngredientSearch = (req, res) => {
-    const keyword = req.query.keyword
+exports.Takeout = (req, res) => {
+    const id = req.session.uid || req.body.id
+    const ic = req.body.ic
 
     // 1. Query Check
     const QueryCheck = () => {
-        if (!keyword) {
+        if (!id || !ic) {
             return Promise.reject({
                 message: 'Query Error'
             })
@@ -15,7 +16,7 @@ exports.IngredientSearch = (req, res) => {
 
     // 2. SQL Start
     const SQLStart = (pool) => {
-        return pool.query(`SELECT * FROM INGREDIENT WHERE NAME LIKE '%${keyword}%'`)
+        return pool.query('DELETE FROM REFRIGERATOR WHERE IC = ? and ID = ?', [ic, id])
     }
 
     // 3. Response
