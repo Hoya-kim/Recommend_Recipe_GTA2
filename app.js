@@ -1,7 +1,6 @@
 const express = require('express')
 const bodyparser = require('body-parser')
 const app = express()
-const router = express.Router()
 const session = require('express-session')
 
 require('dotenv').config()
@@ -11,6 +10,7 @@ app.use(session({
     resave:false,
     saveUninitialized:true
 }))
+
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended: true}))
 app.use(function (req, res, next) {

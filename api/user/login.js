@@ -1,4 +1,4 @@
-const pool = require('../../util/mysqlObj')
+const conn = require('../../util/mysqlObj')
 const MakePassword = require('../../util/password').MakePassword
 
 
@@ -12,34 +12,29 @@ exports.Login = (req, res) => {
             return Promise.reject({
                 message: 'Query Error'
             })
-        } else return Promise.resolve()
+        } else return conn
     }
 
     // 2. Login
-    const Login = async () => {
-        try{
-            const connection = await pool.getConnection(async conn => conn)
-            try{
-                const [rows, fields] = await connection.query(
-                    'SELECT USERID, NAME, EMAIL FROM USER WHERE USERID = ? AND PASSWORD = ?'
-                    , [userId, MakePassword(password)])
-                connection.release()
-                req.session.uid = rows[0]['USERID']
-                req.session.save()
-                return res.status(200).json(rows[0])
-            } catch(err) {
-                console.log('Query Error')
-                connection.release()
-                return res.status(500).json(err)
-            }
-        } catch(err) {
-            console.log('DB Error')
-            return res.status(500).json(err)
-        }
+    const Login = (conn) => {
+        return conn.query('SELECT USERID, NAME, EMAIL FROM USER WHERE USERID = ? AND PASSWORD = ?;', [userId, MakePassword(password)])
+    }
+
+    // 3. Response
+    const Response = ([rows, fields]) => {
+        if (!rows)
+            return Promise.reject({
+                message: 'User Not Match'
+            })
+        rows = (JSON.parse(JSON.stringify(rows)))
+        req.session.uid = rows.USERID
+        req.session.save()
+        return res.status(200).json(rows)
     }
 
     QueryCheck()
         .then(Login)
+        .then(Response)
         .catch(err => {
             if (err) {
                 return res.status(500).json(err.message || err)
