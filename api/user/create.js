@@ -3,7 +3,7 @@ const MakePassword = require('../../util/password').MakePassword
 
 exports.UserCreate = (req, res) => {
     const userId = req.body.userId
-    let password = req.body.password
+    const password = req.body.password
     const email = req.body.email
     const name = req.body.name
 

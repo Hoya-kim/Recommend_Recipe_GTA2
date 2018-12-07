@@ -1,13 +1,11 @@
 const pool = require('../../util/mysqlObj')
 
-exports.IngredientCreate = (req, res) => {
-    const name = req.body.name
-    const category = req.body.category
-
+exports.IngredientSearch = (req, res) => {
+    const keyword = req.body.keyword
 
     // 1. Query Check
     const QueryCheck = () => {
-        if (!category || !name) {
+        if (!keyword) {
             return Promise.reject({
                 message: 'Query Error'
             })
@@ -17,7 +15,7 @@ exports.IngredientCreate = (req, res) => {
 
     // 2. SQL Start
     const SQLStart = (pool) => {
-        return pool.query('INSERT INTO INGREDIENT(NAME, CATEGORY) VALUES (?, ?)', [name, category])
+        return pool.query(`SELECT * FROM INGREDIENT WHERE NAME LIKE '%${keyword}%'`)
     }
 
     // 3. Response
