@@ -1,39 +1,198 @@
 swagger: "2.0"
 info:
-  description: "Node Skeleton"
+  description: "Recommend Food"
   version: "1.0.0"
-  title: "Node Skeleton"
+  title: "Recommend Food"
   termsOfService: "http://swagger.io/terms/"
   contact:
     email: "sobu0715@gmail.com"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "11.111.111.111:1111"
+host: "13.125.196.191:715"
 basePath: "/api"
 tags:
 - name: "user"
   description: "유저 관련 API"
-- name: "board"
-  description: "게시판 관련 API"
-- name: "test"
-  description: "테스트 관련 API"
+- name: "ingredient"
+  description: "재료 관련 API"
 schemes:
 - "https"
 - "http"
 paths:
-  /test:
-    get:
+  /user/create:
+    post:
       tags:
-        - test
-      summary : 서버 테스트
-      description : 서버 테스트
-      responses:
-        '200':
-          description: 서버 ON
+        - user
+      summary : 유저 추가
+      description : 유저 추가
+      parameters :
+        - in : body
+          name : body
+          description : 사용자 정보
+          required : true
           schema:
             type: object
             properties:
-              test:
+              userId:
+                type: string
+                description: 사용자 ID
+              password:
+                type: string
+                description: 비밀 번호
+              email:
+                type: string
+                description: 이메일
+              name:
+                type: string
+                description: 이름
+      responses:
+        '200':
+          description: 성공 여부
+          schema:
+            type: object
+            properties:
+              fieldCount:
+                type: number
+              affectedRows:
+                type: number
+              insertId:
+                type: number
+              serverStatus:
+                type: number
+              warningCount:
+                type: number
+              message:
+                type: string
+              protocol41:
                 type: boolean
-                description: 서버 ON 여부
+              changedRows:
+                type: number
+        '500':
+          description: 실패 이유
+          schema:
+            type: string
+            description: 실패 이유
+  /user/login:
+    post:
+      tags:
+        - user
+      summary : 유저 로그인
+      description : 유저 로그인
+      parameters :
+        - in : body
+          name : body
+          description : 사용자 정보
+          required : true
+          schema:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: 사용자 ID
+              password:
+                type: string
+                description: 비밀 번호
+      responses:
+        '200':
+          description: 성공 여부
+          schema:
+            type: object
+            properties:
+              userId:
+                type: string
+                description: 사용자 ID
+              email:
+                type: string
+                description: 이메일
+              name:
+                type: string
+                description: 이름
+        '500':
+          description: 실패 이유
+          schema:
+            type: string
+            description: 실패 이유
+  /ingredient/create:
+    post:
+      tags:
+        - ingredient
+      summary : 재료 추가
+      description : 재료 추가
+      parameters :
+        - in : body
+          name : body
+          description : SQL 결과
+          required : true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 재료 이름
+              category:
+                type: string
+                description: 재료 카테고리
+      responses:
+        '200':
+          description: 성공 여부
+          schema:
+            type: object
+            properties:
+              fieldCount:
+                type: number
+              affectedRows:
+                type: number
+              insertId:
+                type: number
+              serverStatus:
+                type: number
+              warningCount:
+                type: number
+              message:
+                type: string
+              protocol41:
+                type: boolean
+              changedRows:
+                type: number
+        '500':
+          description: 실패 이유
+          schema:
+            type: string
+            description: 실패 이유
+  /ingredient/search:
+    get:
+      tags:
+        - ingredient
+      summary : 재료 검색
+      description : 재료 검색
+      parameters :
+        - in : query
+          name : keyword
+          description : 키워드
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 배열 반환
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                ID:
+                  type: integer
+                  description: 아이디
+                NAME:
+                  type: string
+                  description: 이름
+                CATEGORY:
+                  type: string
+                  description: 카테고리
+        '500':
+          description: 요청 실패
+          schema:
+            type: string
+            description: 실패 이유
+
+
