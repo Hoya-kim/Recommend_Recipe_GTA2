@@ -18,6 +18,8 @@ tags:
   description: "재료 관련 API"
 - name: "refrigerator"
   description: "냉장고 관련 API"
+- name: "food"
+  description: "음식 관련 API"
 schemes:
 - "https"
 - "http"
@@ -288,7 +290,7 @@ paths:
           schema:
             type: string
             description: 실패 이유
-  /refrigerator/search:
+  /refrigerator/open:
     post:
       tags:
         - refrigerator
@@ -297,22 +299,14 @@ paths:
       parameters :
         - in : body
           name : body
-          description : 키워드
+          description : 유저 정보
           required: true
           schema:
-            type: array
-            items:
-              type: object
-              properties:
-                ID:
-                  type: integer
-                  description: 재료 ID
-                NAME:
-                  type: string
-                  description: 재료 이름
-                CATEGORY:
-                  type: string
-                  description: 카테고리 이름
+            type: object
+            properties:
+              id:
+                type: integer
+                description: 유저 고유 ID, 로그인 세션 유지되어 있을 시 안넣어도 됨
       responses:
         '200':
           description: 배열 반환
@@ -335,5 +329,162 @@ paths:
           schema:
             type: string
             description: 실패 이유
+  /food/create:
+    post:
+      tags:
+        - food
+      summary: 음식 생성
+      description: 음식 생성
+      consumes:
+        - multipart/form-data
+      parameters :
+        - in: formData
+          name: image
+          description: 음식 이미지
+          required: false
+          type: file
+        - in: formData
+          name: name
+          description: 음식 이름
+          required: true
+          type: string
+        - in: formData
+          name: category
+          description: 음식 카테고리
+          required: true
+          type: string
+        - in: formData
+          name: userId
+          description: 유저 고유 ID
+          required: true
+          type: integer
+        - in: formData
+          name: description
+          description: 음식 설명
+          required: true
+          type: string
+        - in: formData
+          name: ingredients
+          description: 재료 ID가 담긴 배열, JSON.stringfy 함수로 스트링 형태로 만들어 줘야 한다.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 요청 성공
+          schema:
+            type: object
+            properties:
+              fieldCount:
+                type: number
+              affectedRows:
+                type: number
+              insertId:
+                type: number
+              serverStatus:
+                type: number
+              warningCount:
+                type: number
+              message:
+                type: string
+              protocol41:
+                type: boolean
+              changedRows:
+                type: number
+        '500':
+          description: 실패 이유
+          schema:
+            type: string
+            description: 실패 이유
+  /food/remove:
+    post:
+      tags:
+        - food
+      summary : 음식 삭제
+      description : 음식 삭제
+      parameters:
+        - in: body
+          name: body
+          description: 유저 ID + 음식 ID
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: 유저 고유 id
+              ic:
+                type: integer
+                description: 음식 id
+      responses:
+        '200':
+          description: 성공 여부
+          schema:
+            type: object
+            properties:
+              fieldCount:
+                type: number
+              affectedRows:
+                type: number
+              insertId:
+                type: number
+              serverStatus:
+                type: number
+              warningCount:
+                type: number
+              message:
+                type: string
+              protocol41:
+                type: boolean
+              changedRows:
+                type: number
+        '500':
+          description: 실패 이유
+          schema:
+            type: string
+            description: 실패 이유
+  /food/search:
+    get:
+      tags:
+        - food
+      summary : 음식 검색
+      description : 음식 검색
+      parameters :
+        - in : query
+          name : keyword
+          description : 키워드
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 배열 반환
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                ID:
+                  type: integer
+                  description: 아이디
+                NAME:
+                  type: string
+                  description: 이름
+                CATEGORY:
+                  type: string
+                  description: 카테고리
+                USERID:
+                  type: integer
+                  description: 유저 ID
+                IMAGE:
+                  type: string
+                  description: 이미지 경로
+                DESCRIPTION:
+                  type: string
+                  description: 설명
+        '500':
+          description: 요청 실패
+          schema:
+            type: string
+            description: 실패 이유
+
+
 
 
