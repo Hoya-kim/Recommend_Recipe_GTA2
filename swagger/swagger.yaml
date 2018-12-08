@@ -484,7 +484,60 @@ paths:
           schema:
             type: string
             description: 실패 이유
-
+  /food/lookup:
+    post:
+      tags:
+        - food
+      summary: 음식 정보 확인
+      description: 음식 정보 확인
+      parameters :
+        - in : body
+          name : body
+          description : 음식 ID
+          required: true
+          schema:
+            type: object
+            properties:
+              foodId:
+                type: integer
+                description: 음식 고유 ID
+      responses:
+        '200':
+          description: 배열 반환
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                uid:
+                  type: integer
+                  description: 유저 고유 ID
+                userid:
+                  type: string
+                  description: 유저 ID
+                name:
+                  type: string
+                  description: 음식이름
+                email:
+                  type: string
+                  description: 이메일
+                foodid:
+                  type: integer
+                  description: 음식 ID
+                category:
+                  type: string
+                  description: 음식 카테고리
+                image:
+                  type: string
+                  description: 이미지 경로
+                description:
+                  type: string
+                  description: 음식 설명
+        '500':
+          description: 요청 실패
+          schema:
+            type: string
+            description: 실패 이유
 
 
 
