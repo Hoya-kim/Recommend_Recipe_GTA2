@@ -20,13 +20,16 @@
   },
   "homepage": "https://github.com/JustKode/Node_Skeleton#readme",
   "dependencies": {
+    "aws-sdk": "^2.373.0",
     "crypto": "^1.0.1",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "mongoose": "^5.3.6",
+    "multer": "^1.4.1",
     "mysql": "^2.16.0",
     "promise-mysql": "^3.3.1",
+    "sharp": "^0.21.1",
     "swagger-ui-express": "^4.0.1",
     "yamljs": "^0.3.0"
   }
