@@ -1,7 +1,7 @@
 const pool = require('../../util/mysqlObj')
 
-exports.FoodLookup = (req, res) => {
-    const foodId = req.params.foodId
+exports.FoodRecipe = (req, res) => {
+    const foodId = req.query.foodId
 
     // 1. Query Check
     const QueryCheck = () => {
@@ -15,7 +15,7 @@ exports.FoodLookup = (req, res) => {
 
     // 2. SQL Start
     const SQLStart = (pool) => {
-        return pool.query(`SELECT u.id uid, u.userid, u.name, u.email, f.id foodid, f.name, f.category, f.image, f.description FROM FOOD f, USER u WHERE f.ID = ? AND ifnull(f.userid, 1) = u.id`, [foodId])
+        return pool.query('select I.ID, I.NAME, I.CATEGORY from ingredient I, recipe R where R.FOOD = 25 and R.IC = I.ID', [foodId])
     }
 
     // 3. Response
