@@ -484,7 +484,89 @@ paths:
           schema:
             type: string
             description: 실패 이유
-
+  /food/lookup:
+    get:
+      tags:
+        - food
+      summary: 음식 정보 확인
+      description: 음식 정보 확인
+      parameters :
+        - in : query
+          name : foodId
+          description : 음식 ID
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 배열 반환
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                uid:
+                  type: integer
+                  description: 유저 고유 ID
+                userid:
+                  type: string
+                  description: 유저 ID
+                name:
+                  type: string
+                  description: 음식이름
+                email:
+                  type: string
+                  description: 이메일
+                foodid:
+                  type: integer
+                  description: 음식 ID
+                category:
+                  type: string
+                  description: 음식 카테고리
+                image:
+                  type: string
+                  description: 이미지 경로
+                description:
+                  type: string
+                  description: 음식 설명
+        '500':
+          description: 요청 실패
+          schema:
+            type: string
+            description: 실패 이유
+  /food/getRecipe:
+    get:
+      tags:
+        - food
+      summary: 음식 레시피 확인
+      description: 음식 레시피 확인
+      parameters :
+        - in : query
+          name : foodId
+          description : 음식 ID
+          type: string
+          required: true
+      responses:
+        '200':
+          description: 배열 반환
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                ID:
+                  type: integer
+                  description: 아이디
+                NAME:
+                  type: string
+                  description: 이름
+                CATEGORY:
+                  type: string
+                  description: 카테고리
+        '500':
+          description: 요청 실패
+          schema:
+            type: string
+            description: 실패 이유
 
 
 
