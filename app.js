@@ -3,7 +3,9 @@ const bodyparser = require('body-parser')
 const app = express()
 const session = require('express-session')
 const morgan = require('morgan')
-
+const swaggerUi = require('swagger-ui-express')
+const YAML = require('yamljs')
+const swaggerDocument = YAML.load('./swagger/swagger.yaml')
 require('dotenv').config()
 
 app.use(morgan('[:date[iso]] :method :status :url :response-time(ms) :user-agent'))
@@ -12,7 +14,7 @@ app.use(session({
     resave:false,
     saveUninitialized:true
 }))
-
+app.use('/public', express.static(__dirname + '/public'))
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended: true}))
 app.use(function (req, res, next) {
@@ -22,11 +24,6 @@ app.use(function (req, res, next) {
     next()
   })
 app.use('/api', require('./api'))
-
-const swaggerUi = require('swagger-ui-express')
-const YAML = require('yamljs')
-const swaggerDocument = YAML.load('./swagger/swagger.yaml')
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.listen(process.env.PORT, () => {
