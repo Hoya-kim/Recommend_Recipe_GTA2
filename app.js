@@ -2,9 +2,11 @@ const express = require('express')
 const bodyparser = require('body-parser')
 const app = express()
 const session = require('express-session')
+const morgan = require('morgan')
 
 require('dotenv').config()
 
+app.use(morgan('[:date[iso]] :method :status :url :response-time(ms) :user-agent'))
 app.use(session({
     secret:process.env.SECRETKEY,
     resave:false,
