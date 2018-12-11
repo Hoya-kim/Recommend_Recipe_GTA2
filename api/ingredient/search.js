@@ -2,6 +2,7 @@ const pool = require('../../util/mysqlObj')
 
 exports.IngredientSearch = (req, res) => {
     const keyword = req.query.keyword
+    const page = req.query.page || 1
 
     // 1. Query Check
     const QueryCheck = () => {

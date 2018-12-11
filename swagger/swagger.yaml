@@ -176,6 +176,11 @@ paths:
           description : 키워드
           type: string
           required: true
+        - in : query
+          name : page
+          description: 페이지 수, Default는 1이다.
+          type : integer
+          required: false
       responses:
         '200':
           description: 배열 반환
@@ -549,6 +554,11 @@ paths:
           description : 키워드
           type: string
           required: true
+        - in : query
+          name : page
+          description: 페이지 수, Default는 1이다.
+          type : integer
+          required: false
       responses:
         '200':
           description: 배열 반환
