@@ -15,7 +15,7 @@ exports.IngredientSearch = (req, res) => {
 
     // 2. SQL Start
     const SQLStart = (pool) => {
-        return pool.query(`SELECT * FROM INGREDIENT WHERE NAME LIKE '%${keyword}%'`)
+        return pool.query(`SELECT * FROM INGREDIENT WHERE NAME LIKE '%${keyword}%' LIMIT ${(page-1)*10}, ${10}`)
     }
 
     // 3. Response
