@@ -6,11 +6,13 @@ const morgan = require('morgan')
 const swaggerUi = require('swagger-ui-express')
 const YAML = require('yamljs')
 const swaggerDocument = YAML.load('./swagger/swagger.yaml')
+const cookieParser = require('cookie-parser')
 require('dotenv').config()
 
 app.use(morgan('[:date[iso]] :method :status :url :response-time(ms) :user-agent'))
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended: true}))
+app.use(cookieParser())
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH')
@@ -26,7 +28,8 @@ app.use(session({
 app.use('/api', require('./api'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
+app.use('/', express.static(__dirname + '/public'))
+
 app.listen(process.env.PORT, () => {
     console.log(`listening on port: ${process.env.PORT}`)
 })
-app.use('/', express.static(__dirname + '/public'))

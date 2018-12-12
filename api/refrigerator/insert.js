@@ -1,16 +1,8 @@
 const pool = require('../../util/mysqlObj')
-const session=require('express-session')
-const app=require('express')()
 
-app.use(session({
-    secret:process.env.SECRETKEY,
-    resave:false,
-    saveUninitialized:true,
-    cookie: {secure:true}
-}))
 
 exports.Insert = (req, res) => {
-    const id = req.session.uid || req.body.id
+    const id = req.cookies.uid || req.body.id
     const ic = req.body.ic
 
     // 1. Query Check

@@ -1,14 +1,5 @@
 const conn = require('../../util/mysqlObj')
 const MakePassword = require('../../util/password').MakePassword
-const session=require('express-session')
-const app=require('express')()
-
-app.use(session({
-    secret:process.env.SECRETKEY,
-    resave:false,
-    saveUninitialized:true,
-    cookie: {secure:true}
-}))
 
 exports.Login = (req, res) => {
     const userId = req.body.userId
@@ -35,11 +26,7 @@ exports.Login = (req, res) => {
                 message: 'User Not Match'
             })
         rows = (JSON.parse(JSON.stringify(rows)))
-        req.session.uid = rows.ID
-        console.log(req.session.uid)
-        req.session.save((err) => {
-            console.log(err)
-        })
+        res.cookie('uid', rows.ID)
         return res.status(200).json(rows)
     }
 
