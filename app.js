@@ -9,12 +9,7 @@ const swaggerDocument = YAML.load('./swagger/swagger.yaml')
 require('dotenv').config()
 
 app.use(morgan('[:date[iso]] :method :status :url :response-time(ms) :user-agent'))
-app.use(session({
-    secret:process.env.SECRETKEY,
-    resave:false,
-    saveUninitialized:true
-}))
-app.use('/public', express.static(__dirname + '/public'))
+app.use('/', express.static(__dirname + '/public'))
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended: true}))
 app.use(function (req, res, next) {
@@ -23,9 +18,14 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Headers', 'content-type')
     next()
   })
+app.use(session({
+    secret:process.env.SECRETKEY,
+    resave:false,
+    saveUninitialized:true,
+    cookie: {secure:true}
+}))
 app.use('/api', require('./api'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-app.use('/', require('./page'))
 
 app.listen(process.env.PORT, () => {
     console.log(`listening on port: ${process.env.PORT}`)

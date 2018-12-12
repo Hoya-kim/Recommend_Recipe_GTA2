@@ -17,7 +17,7 @@ exports.Login = (req, res) => {
 
     // 2. Login
     const Login = (conn) => {
-        return conn.query('SELECT USERID, NAME, EMAIL FROM USER WHERE USERID = ? AND PASSWORD = ?;', [userId, MakePassword(password)])
+        return conn.query('SELECT ID, USERID, NAME, EMAIL FROM USER WHERE USERID = ? AND PASSWORD = ?;', [userId, MakePassword(password)])
     }
 
     // 3. Response
@@ -27,8 +27,11 @@ exports.Login = (req, res) => {
                 message: 'User Not Match'
             })
         rows = (JSON.parse(JSON.stringify(rows)))
-        req.session.uid = rows.USERID
-        req.session.save()
+        req.session.uid = rows.ID
+        console.log(req.session.uid)
+        req.session.save((err) => {
+            console.log(err)
+        })
         return res.status(200).json(rows)
     }
 
