@@ -2,6 +2,15 @@ const pool = require('../../util/mysqlObj')
 const sharp = require('sharp')
 const path = require('path')
 const AWS = require('aws-sdk')
+const session=require('express-session')
+const app=require('express')()
+
+app.use(session({
+    secret:process.env.SECRETKEY,
+    resave:false,
+    saveUninitialized:true,
+    cookie: {secure:true}
+}))
 
 AWS.config.update({
     accessKeyId: process.env.AWSAccessKeyId,

@@ -1,4 +1,13 @@
 const pool = require('../../util/mysqlObj')
+const session=require('express-session')
+const app=require('express')()
+
+app.use(session({
+    secret:process.env.SECRETKEY,
+    resave:false,
+    saveUninitialized:true,
+    cookie: {secure:true}
+}))
 
 exports.getMoreFood = (req, res) => {
     const userId = req.session.uid || req.body.userId

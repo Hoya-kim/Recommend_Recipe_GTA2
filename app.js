@@ -9,7 +9,6 @@ const swaggerDocument = YAML.load('./swagger/swagger.yaml')
 require('dotenv').config()
 
 app.use(morgan('[:date[iso]] :method :status :url :response-time(ms) :user-agent'))
-app.use('/', express.static(__dirname + '/public'))
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended: true}))
 app.use(function (req, res, next) {
@@ -30,3 +29,4 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.listen(process.env.PORT, () => {
     console.log(`listening on port: ${process.env.PORT}`)
 })
+app.use('/', express.static(__dirname + '/public'))

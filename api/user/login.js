@@ -1,6 +1,14 @@
 const conn = require('../../util/mysqlObj')
 const MakePassword = require('../../util/password').MakePassword
+const session=require('express-session')
+const app=require('express')()
 
+app.use(session({
+    secret:process.env.SECRETKEY,
+    resave:false,
+    saveUninitialized:true,
+    cookie: {secure:true}
+}))
 
 exports.Login = (req, res) => {
     const userId = req.body.userId
