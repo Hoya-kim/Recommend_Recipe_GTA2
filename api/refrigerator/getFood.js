@@ -15,7 +15,7 @@ exports.getFood = (req, res) => {
 
     // 2. SQL Start
     const SQLStart = (pool) => {
-        return pool.query('SELECT * FROM FOOD WHERE ID IN (SELECT FOOD FROM RECIPE WHERE IC (SELECT IC FROM REFRIGERATOR WHERE ID = ?) GROUP BY FOOD HAVING (COUNT(*), FOOD) in (SELECT COUNT(*), FOOD FROM RECIPE GROUP BY FOOD))', [userId])
+        return pool.query('SELECT * FROM FOOD WHERE ID IN (SELECT FOOD FROM RECIPE WHERE IC IN (SELECT IC FROM REFRIGERATOR WHERE ID = ?) GROUP BY FOOD HAVING (COUNT(*), FOOD) in (SELECT COUNT(*), FOOD FROM RECIPE GROUP BY FOOD))', [userId])
     }
 
     // 3. Response
