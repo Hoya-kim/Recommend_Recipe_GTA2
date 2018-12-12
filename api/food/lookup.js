@@ -1,7 +1,7 @@
 const pool = require('../../util/mysqlObj')
 
 exports.FoodLookup = (req, res) => {
-    const foodId = req.params.foodId
+    const foodId = req.query.foodId
 
     // 1. Query Check
     const QueryCheck = () => {
