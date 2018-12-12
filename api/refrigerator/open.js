@@ -15,7 +15,7 @@ exports.Open = (req, res) => {
 
     // 2. SQL Start
     const SQLStart = (pool) => {
-        return pool.query('SELECT i.id, i.name, i.category from refrigerator r, ingredient i where r.ic = i.id and r.id = ?', [id])
+        return pool.query('SELECT I.ID, I.NAME, I.CATEGORY from REFRIGERATOR R, INGREDIENT I WHERE R.IC = I.ID AND R.ID = ?', [id])
     }
 
     // 3. Response

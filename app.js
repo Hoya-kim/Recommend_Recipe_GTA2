@@ -25,6 +25,7 @@ app.use(function (req, res, next) {
   })
 app.use('/api', require('./api'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use('/', require('./page'))
 
 app.listen(process.env.PORT, () => {
     console.log(`listening on port: ${process.env.PORT}`)

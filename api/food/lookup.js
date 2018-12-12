@@ -15,7 +15,7 @@ exports.FoodLookup = (req, res) => {
 
     // 2. SQL Start
     const SQLStart = (pool) => {
-        return pool.query(`SELECT u.id uid, u.userid, u.name, u.email, f.id foodid, f.name, f.category, f.image, f.description FROM FOOD f, USER u WHERE f.ID = ? AND ifnull(f.userid, 1) = u.id`, [foodId])
+        return pool.query(`SELECT U.ID UID, U.USERID, U.NAME, U.EMAIL, F.ID FOODID, F.NAME, F.CATEGORY, F.IMAGE, F.DESCRIPTION FROM FOOD F, USER U WHERE F.ID = ? AND ifnull(F.USERID, 1) = U.ID`, [foodId])
     }
 
     // 3. Response
