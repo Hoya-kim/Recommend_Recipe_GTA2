@@ -103,13 +103,13 @@ paths:
           schema:
             type: object
             properties:
-              userId:
+              USERID:
                 type: string
                 description: 사용자 ID
-              email:
+              EMAIL:
                 type: string
                 description: 이메일
-              name:
+              NAME:
                 type: string
                 description: 이름
         '500':
@@ -610,28 +610,28 @@ paths:
             items:
               type: object
               properties:
-                uid:
+                UID:
                   type: integer
                   description: 유저 고유 ID
-                userid:
+                USERID:
                   type: string
                   description: 유저 ID
-                name:
+                NAME:
                   type: string
                   description: 음식이름
-                email:
+                EMAIL:
                   type: string
                   description: 이메일
-                foodid:
+                FOODID:
                   type: integer
                   description: 음식 ID
-                category:
+                CATEGORY:
                   type: string
                   description: 음식 카테고리
-                image:
+                IMAGE:
                   type: string
                   description: 이미지 경로
-                description:
+                DESCRIPTION:
                   type: string
                   description: 음식 설명
         '500':

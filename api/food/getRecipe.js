@@ -15,7 +15,7 @@ exports.FoodRecipe = (req, res) => {
 
     // 2. SQL Start
     const SQLStart = (pool) => {
-        return pool.query('select I.ID, I.NAME, I.CATEGORY from ingredient I, recipe R where R.FOOD = 25 and R.IC = I.ID', [foodId])
+        return pool.query('SELECT I.ID, I.NAME, I.CATEGORY FROM INGREDIENT I, RECIPE R WHERE R.FOOD = 25 and R.IC = I.ID', [foodId])
     }
 
     // 3. Response
